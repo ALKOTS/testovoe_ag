@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* #__nuxt div {
+	@apply outline outline-1 outline-black;
+} */
+* {
+	@apply font-roboto;
+}
