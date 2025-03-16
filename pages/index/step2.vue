@@ -43,6 +43,15 @@ const { execute: send } = useFetch<SendData>(
 		},
 		immediate: false,
 		method: "GET",
+		onResponse: (response) => {
+			if (
+				!response.response._data.success &&
+				response.response._data.sys_message ==
+					"ERROR_USER_NOT_AUTHORIZE_ON_CHANNEL"
+			) {
+				navigateTo(localePath({ name: "telegramStatus" }))
+			}
+		},
 		query: {
 			session_id: computed(() => data_create.value?.data.session_id),
 			type: computed(() => sm.value?.code || "sms"),
