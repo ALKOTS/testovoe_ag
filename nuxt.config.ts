@@ -1,5 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+	app: {
+		keepalive: true,
+	},
+
 	compatibilityDate: "2024-11-01",
 	devtools: {
 		enabled: true,
@@ -8,12 +12,18 @@ export default defineNuxtConfig({
 			enabled: true,
 		},
 	},
+
 	experimental: {
 		clientFallback: true,
+		typedPages: true,
 	},
-
 	i18n: {
 		defaultLocale: "ru",
+		experimental: {
+			typedOptionsAndMessages: "all",
+
+			typedPages: true,
+		},
 		locales: [
 			{ code: "en", language: "en-US" },
 			{ code: "ru", language: "ru-RU" },

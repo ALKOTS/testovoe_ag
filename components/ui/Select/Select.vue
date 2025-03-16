@@ -35,7 +35,7 @@ onClickOutside(dropdownMenu, () => {
 </script>
 
 <template>
-	<div ref="dropdownContainer" class="relative w-full bg-inherit">
+	<div ref="dropdownContainer" class="relative w-full bg-white">
 		<UiSelectPrompt
 			v-model:visible="dropdownVisible"
 			:hint
@@ -46,7 +46,7 @@ onClickOutside(dropdownMenu, () => {
 		<div
 			v-if="dropdownVisible"
 			ref="dropdownMenu"
-			class="absolute bg-inherit p-4 my-1 w-full rounded-b-md flex flex-col max-h-80 h-fit overflow-y-auto z-10"
+			class="absolute bg-white p-4 my-1 w-full rounded-b-md flex flex-col max-h-80 h-fit overflow-y-auto z-10"
 			style="
 				box-shadow: 0 6px 12px -3px rgba(0, 0, 0, 0.6),
 					0 3px 6px rgba(0, 0, 0, 0.3);

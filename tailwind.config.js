@@ -8,6 +8,9 @@ export default {
 			backgroundColor: {
 				placeholder: "#F8F8F8",
 			},
+			colors: {
+				submit: "#007AFF",
+			},
 			fontFamily: {
 				roboto: ["Roboto", "sans-serif"],
 			},

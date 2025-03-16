@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ErrorMessage, Field } from "vee-validate"
+import { Field } from "vee-validate"
 
-const { errors, name } = defineProps<{
+const { errors, extraErrors, name } = defineProps<{
 	errors?: Record<string, string | undefined>
+	extraErrors?: Record<string, string | undefined>
 	hint?: string
 	name: string
 	prefix?: string
@@ -19,6 +20,14 @@ const { focused: inputFocused } = useFocus(input)
 
 watch(
 	() => errors,
+	(newValue) => {
+		isError.value = newValue && name in newValue
+	},
+	{ deep: true }
+)
+
+watch(
+	() => extraErrors,
 	(newValue) => {
 		isError.value = newValue && name in newValue
 	},
@@ -53,7 +62,9 @@ watch(
 				'outline-input': !isError,
 			}"
 		>
-			<div v-if="inputFocused || (value && value.length > 0)">+7</div>
+			<div v-if="(inputFocused || (value && value.length > 0)) && prefix">
+				{{ prefix }}
+			</div>
 			<Field
 				:id="name"
 				ref="input"
@@ -63,12 +74,11 @@ watch(
 				:placeholder="hint"
 				:type
 			/>
+			<slot name="postfix" />
 		</div>
 
-		<ErrorMessage
-			v-if="isError"
-			class="text-red-500 text-sm mt-1 px-5"
-			:name
-		/>
+		<div v-if="isError" class="text-red-500 text-sm mt-1 px-5">
+			{{ { ...errors, ...extraErrors }[name] }}
+		</div>
 	</div>
 </template>
