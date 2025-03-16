@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { format } from "date-fns"
+import { onUnmounted, ref } from "vue"
+
 const timeLeft = ref(60)
-const timer = ref<NodeJS.Timeout>()
+const timer = ref<NodeJS.Timeout | null>()
 const isRunning = ref(false)
 
 const startTimer = () => {
@@ -11,16 +14,21 @@ const startTimer = () => {
 		if (timeLeft.value > 0) {
 			timeLeft.value--
 		} else {
-			clearInterval(timer.value)
+			clearInterval(timer.value!)
 			isRunning.value = false
 		}
 	}, 1000)
 }
 
 onUnmounted(() => {
-	clearInterval(timer.value)
+	if (timer.value) clearInterval(timer.value)
 })
 
+const formattedTime = () => {
+	const minutes = Math.floor(timeLeft.value / 60)
+	const seconds = timeLeft.value % 60
+	return format(new Date(0, 0, 0, 0, minutes, seconds), "m:ss")
+}
 defineExpose({
 	isRunning,
 	startTimer,
@@ -29,22 +37,7 @@ defineExpose({
 
 <template>
 	<div class="text-gray-hint">
-		0:{{ timeLeft }}
+		{{ formattedTime() }}
 		<!-- <button :disabled="isRunning" @click="startTimer">Start Timer</button> -->
 	</div>
 </template>
-
-<style scoped>
-button {
-	margin-top: 10px;
-	padding: 10px;
-	background-color: #007bff;
-	color: white;
-	border: none;
-	cursor: pointer;
-}
-button:disabled {
-	background-color: #aaa;
-	cursor: not-allowed;
-}
-</style>

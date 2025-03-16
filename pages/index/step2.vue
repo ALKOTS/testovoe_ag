@@ -51,7 +51,7 @@ const { execute: send } = useFetch<SendData>(
 	}
 )
 const code = ref("")
-const { data_check, execute: check } = useFetch<CheckData>(
+const { execute: check } = useFetch<CheckData>(
 	"https://api.kod.mobi/api/v1/message/check",
 	{
 		headers: {
@@ -81,7 +81,7 @@ const countdown = ref<InstanceType<typeof UiCountdown> | null>()
 <template>
 	<Form
 		v-slot="{ errors }"
-		class="flex flex-col items-center bg-inherit *:w-full"
+		class="flex flex-col items-center bg-inherit *:w-full justify-center gap-7"
 		:validation-schema="codeValidationSchema"
 		@invalid-submit="
 			() => {
@@ -95,94 +95,95 @@ const countdown = ref<InstanceType<typeof UiCountdown> | null>()
 			}
 		"
 	>
+		<LoginHeader
+			:main="t('loginHeaderCode')"
+			:sub="`${t('loginSubHeaderCode')} ${phone}`"
+		/>
+
 		<div
-			class="flex flex-col items-center justify-center gap-7 bg-inherit h-full"
+			class="flex flex-col items-center justify-center gap-10 w-full bg-inherit"
 		>
-			<LoginHeader
-				:main="t('loginHeaderCode')"
-				:sub="`${t('loginSubHeaderCode')} ${phone}`"
-			/>
-
-			<div
-				class="flex flex-col items-center justify-center gap-10 w-full bg-inherit"
+			<UiSelect
+				v-model:value="sm"
+				:hint="$t('hintCodeMethod')"
+				:options="
+					data_create?.data.client_channels.map((channel) => ({
+						code: channel.type,
+						flag: channel.image_url,
+						name: channel.name,
+					}))
+				"
 			>
-				<UiSelect
-					v-model:value="sm"
-					:hint="$t('hintCodeMethod')"
-					:options="
-						data_create?.data.client_channels.map((channel) => ({
-							code: channel.type,
-							flag: channel.image_url,
-							name: channel.name,
-						}))
-					"
-				>
-					<template #option="{ option }">
-						<div class="flex flex-row gap-[10px] items-center">
-							<img
-								alt="flag"
-								class="size-6 rounded-md"
-								:src="option.flag"
-							/>
-
-							<div class="font-normal leading-none">
-								{{ option.name }}
-							</div>
-						</div>
-					</template>
-				</UiSelect>
-
-				<UiInput
-					:errors
-					:extra-errors="customError"
-					:hint="$t('hintCode')"
-					:name="'code'"
-					type="text"
-				>
-					<template #postfix>
-						<button
-							v-show="!countdown?.isRunning"
-							class="text-submit font-medium"
-							type="button"
-							@click="
-								() => {
-									send()
-									countdown?.startTimer()
-								}
-							"
-						>
-							Отправить
-						</button>
-						<UiCountdown
-							v-show="countdown?.isRunning"
-							ref="countdown"
-						/>
-					</template>
-				</UiInput>
-
-				<div class="w-full flex flex-row gap-[10px]">
-					<button
-						class="flex-1 w-full flex flex-row justify-center items-center gap-[10px]"
-						type="button"
-						@click="navigateTo($localePath({ name: 'index' }))"
-					>
+				<template #option="{ option }">
+					<div class="flex flex-row gap-[10px] items-center">
 						<img
-							alt="arrow-left"
-							class="size-3"
-							src="~@/assets/icons/arrow-back.svg"
+							alt="flag"
+							class="size-6 rounded-md"
+							:src="option.flag"
 						/>
-						<div class="text-submit font-medium text-base">
-							{{ $t("backButton") }}
+
+						<div class="font-normal leading-none">
+							{{ option.name }}
 						</div>
-					</button>
+					</div>
+				</template>
+			</UiSelect>
+
+			<UiInput
+				:errors
+				:extra-errors="customError"
+				:hint="$t('hintCode')"
+				:name="'code'"
+				type="text"
+			>
+				<template #postfix>
 					<button
-						class="w-full flex-1 bg-submit text-white rounded-md p-input"
-						type="submit"
+						v-show="!countdown?.isRunning"
+						class="text-submit font-medium"
+						type="button"
+						@click="
+							() => {
+								send()
+								countdown?.startTimer()
+							}
+						"
 					>
-						{{ $t("submitContinue") }}
+						Отправить
 					</button>
-				</div>
+					<UiCountdown
+						v-show="countdown?.isRunning"
+						ref="countdown"
+					/>
+				</template>
+			</UiInput>
+
+			<div class="w-full flex flex-row gap-[10px]">
+				<button
+					class="flex-1 w-full flex flex-row justify-center items-center gap-[10px]"
+					type="button"
+					@click="navigateTo($localePath({ name: 'index' }))"
+				>
+					<img
+						alt="arrow-left"
+						class="size-3"
+						src="~@/assets/icons/arrow-back.svg"
+					/>
+					<div class="text-submit font-medium text-base">
+						{{ $t("backButton") }}
+					</div>
+				</button>
+				<UiButton>
+					{{ $t("submitContinue") }}
+				</UiButton>
 			</div>
 		</div>
+		<!--
+		  <button
+		  type="button"
+		  @click="navigateTo($localePath({ name: 'telegramStatus' }))"
+		  >
+		  ss
+		  </button> 
+		-->
 	</Form>
 </template>

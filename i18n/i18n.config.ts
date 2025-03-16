@@ -4,6 +4,7 @@ export default defineI18nConfig(() => ({
 	messages: {
 		en: {
 			backButton: "Back",
+			continue: "Continue",
 			hintCode: "Enter code",
 			hintCodeMethod: "Code recieve method",
 			hintCountry: "Country",
@@ -15,11 +16,14 @@ export default defineI18nConfig(() => ({
 			loginSubHeader: "To log in or register",
 			loginSubHeaderCode: "Code sent to: ",
 			submitContinue: "Continue",
+			tgBotHint: "To use this channel you need to authorize in the bot",
+			tgCheckStatus: "Check status",
 			valErrorCode: "Invalid code",
 			valErrorPhone: "Invalid phone number",
 		},
 		ru: {
 			backButton: "Назад",
+			continue: "Продолжить",
 			hintCode: "Введите код",
 			hintCodeMethod: "Метод получения кода",
 			hintCountry: "Страна",
@@ -31,6 +35,9 @@ export default defineI18nConfig(() => ({
 			loginSubHeader: "Чтобы войти или зарегистрироваться",
 			loginSubHeaderCode: "Отправлен по номеру",
 			submitContinue: "Продолжить",
+			tgBotHint:
+				"Для использования данного канала связи вам необходимо авторизоваться в боте",
+			tgCheckStatus: "Проверить статус",
 			valErrorCode: "Неверный код",
 			valErrorPhone: "Неверный формат номера",
 		},

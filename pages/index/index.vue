@@ -74,7 +74,7 @@ const { execute: create } = useFetch<CreateData>(
 <template>
 	<Form
 		v-slot="{ errors }"
-		class="flex flex-col items-center bg-inherit *:w-full"
+		class="flex flex-col items-center bg-inherit *:w-full justify-center gap-7"
 		:validation-schema="phoneValidationSchema"
 		@invalid-submit="
 			() => {
@@ -88,52 +88,45 @@ const { execute: create } = useFetch<CreateData>(
 			}
 		"
 	>
+		<LoginHeader :main="t('loginHeader')" :sub="t('loginSubHeader')" />
 		<div
-			class="flex flex-col items-center justify-center gap-7 bg-inherit h-full"
+			class="flex flex-col items-center justify-center gap-10 w-full bg-inherit"
 		>
-			<LoginHeader :main="t('loginHeader')" :sub="t('loginSubHeader')" />
-			<div
-				class="flex flex-col items-center justify-center gap-10 w-full bg-inherit"
+			<UiSelect
+				v-model:value="country"
+				:hint="$t('hintCountry')"
+				:options="phones"
 			>
-				<UiSelect
-					v-model:value="country"
-					:hint="$t('hintCountry')"
-					:options="phones"
-				>
-					<template #option="{ option }">
-						<div class="flex flex-row justify-between text-left">
-							<div class="flex flex-row gap-[10px]">
-								<div class="leading-none">
-									{{ option.flag }}
-								</div>
-								<div class="font-normal leading-none">
-									{{ option.name }}
-								</div>
-							</div>
-
+				<template #option="{ option }">
+					<div class="flex flex-row justify-between text-left">
+						<div class="flex flex-row gap-[10px]">
 							<div class="leading-none">
-								{{ option.dial_code }}
+								{{ option.flag }}
+							</div>
+							<div class="font-normal leading-none">
+								{{ option.name }}
 							</div>
 						</div>
-					</template>
-				</UiSelect>
 
-				<UiInput
-					:errors
-					:extra-errors="customError"
-					:hint="$t('hintPhone')"
-					:name="'phone'"
-					:prefix="country?.dial_code"
-					type="text"
-				/>
+						<div class="leading-none">
+							{{ option.dial_code }}
+						</div>
+					</div>
+				</template>
+			</UiSelect>
 
-				<button
-					class="w-full bg-submit text-white rounded-md p-input"
-					type="submit"
-				>
-					{{ $t("submitContinue") }}
-				</button>
-			</div>
+			<UiInput
+				:errors
+				:extra-errors="customError"
+				:hint="$t('hintPhone')"
+				:name="'phone'"
+				:prefix="country?.dial_code"
+				type="text"
+			/>
+
+			<UiButton>
+				{{ $t("submitContinue") }}
+			</UiButton>
 		</div>
 	</Form>
 </template>
