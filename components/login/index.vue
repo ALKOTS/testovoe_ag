@@ -11,18 +11,18 @@ const { data: phones } = useFetch(
 		},
 	}
 )
-
+const { t } = useI18n()
 const phoneValidationSchema = yup.object({
 	phone: yup
 		.string()
-		.matches(/^\d{10}$/, "Phone number must be exactly 10 digits")
-		.required("Phone number is required"),
+		.matches(/^\d{10}$/, t("valErrorPhone"))
+		.required(),
 })
 </script>
 
 <template>
 	<Form
-		v-slot="{ isSubmitting }"
+		v-slot="{ errors }"
 		class="w-[500px] h-[600px] outline outline-1 outline-input rounded-md flex flex-col items-center justify-between p-[30px] bg-white *:w-full"
 		:validation-schema="phoneValidationSchema"
 		@invalid-submit="
@@ -44,7 +44,7 @@ const phoneValidationSchema = yup.object({
 				class="flex flex-col items-center justify-center gap-10 w-full bg-inherit"
 			>
 				<UiSelect
-					:hint="'Страна'"
+					:hint="$t('hintCountry')"
 					:options="phones"
 					:value="phones?.find((phone) => phone.code == 'RU')"
 				>
@@ -66,13 +66,18 @@ const phoneValidationSchema = yup.object({
 					</template>
 				</UiSelect>
 
-				<UiInput :hint="'Номер телефона'" :name="'phone'" type="text" />
+				<UiInput
+					:errors
+					:hint="$t('hintPhone')"
+					:name="'phone'"
+					type="text"
+				/>
 
 				<button
 					class="w-full bg-[#007AFF] text-white rounded-md p-input"
 					type="button"
 				>
-					Продолжить
+					{{ $t("submitContinue") }}
 				</button>
 			</div>
 		</div>

@@ -12,11 +12,19 @@ export default defineNuxtConfig({
 		clientFallback: true,
 	},
 
+	i18n: {
+		defaultLocale: "ru",
+		locales: [
+			{ code: "en", language: "en-US" },
+			{ code: "ru", language: "ru-RU" },
+		],
+	},
 	modules: [
 		"@nuxt/eslint",
 		"@nuxtjs/tailwindcss",
 		"@nuxt/fonts",
 		"@vueuse/nuxt",
+		"@nuxtjs/i18n",
 	],
 	runtimeConfig: {
 		public: {
