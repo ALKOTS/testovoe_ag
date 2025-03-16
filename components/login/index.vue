@@ -12,9 +12,6 @@ const { data } = useFetch(
 )
 
 const inputValue = ref("")
-watch(inputValue, () => {
-	console.log(inputValue.value)
-})
 </script>
 
 <template>

@@ -2,6 +2,7 @@
 export default {
 	content: ["./src/**/*.{js,ts,jsx,tsx}"],
 	darkMode: ["class"],
+	plugins: [],
 	theme: {
 		extend: {
 			backgroundColor: {
