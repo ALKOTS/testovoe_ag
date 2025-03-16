@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { ErrorMessage, Field } from "vee-validate"
+
 defineProps<{
 	hint?: string
+	name: string
+	type: string
+	value?: string
 }>()
-
-const value = defineModel<string>("value")
 </script>
 
 <template>
@@ -14,11 +17,16 @@ const value = defineModel<string>("value")
 		>
 			{{ hint }}
 		</div>
-		<input
-			v-model="value"
+
+		<Field
+			:id="name"
 			class="rounded-md p-input w-full outline outline-1 outline-input"
+			:name
 			:placeholder="hint"
-			type="text"
+			:type
+			:value
 		/>
+
+		<ErrorMessage class="text-red-500 text-sm mt-1" :name />
 	</div>
 </template>
